@@ -1,0 +1,110 @@
+#race {
+    border-radius: 0;
+}
+
+body {
+    background-color: rgb(70, 70, 70);
+    color: white;
+  }
+  @media screen and (prefers-color-scheme: light) {
+    body {
+      background-color: white;
+      color: black;
+    }
+  }
+
+.stat {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.label-stat {
+    width: 35px;
+}
+
+.value-stat {
+    margin: 0 10px 0 10px;
+}
+
+.modifier-stat {
+    margin-left: 10px;
+    margin-bottom: 0;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td,
+th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+.card {
+    margin: 0 auto; /* Added */
+    float: none; /* Added */
+    margin-bottom: 10px; /* Added */
+}
+.container {
+    height: 20px;
+    position: relative;
+  }
+  
+  .center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+
+  .centered {
+    margin: 0;
+    position: absolute;
+    top: 155%;
+    left: 47.5px;
+  }
+  .terminale
+  {
+    border-style: solid;
+    border-color: white;
+  }
+  .hidden
+  {
+    display: none;
+  }
+
+  .shake {
+    animation: shake 2s ease ;
+  }
+  @keyframes shake {
+    0%, 100% {transform: translateX(0);}
+    10%, 30%, 50%, 70%, 90% {transform: translateX(-10px);}
+    20%, 40%, 60%, 80% {transform: translateX(10px);}
+  }
+
+  .rotate
+  {
+    animation : rotate 2s ease 
+  }
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(359deg);
+    }
+  }
+
+
+  

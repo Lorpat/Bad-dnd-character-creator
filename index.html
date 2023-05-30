@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="./style.css">
+  <title>API</title>
+</head>
+
+<body>
+
+  <h1>Bad D&D character creator</h1>
+
+  <dialog close id="mess"></dialog>
+  <form action="">
+    <label for="name">Character name</label>
+    <input onchange="changeName()" id="name" name="name" type="text">
+    <br><br>
+    <label for="class">Class</label>
+    <select id="class" onchange="classChange()"></select>
+    <br><br>
+    <label for="race">Race</label>
+    <select id="race" onchange="raceChange()"></select>
+    <p id="bonus">Ability bonus: </p>
+    <button type="button" onclick="whatBtn()" id="what">What are this numbers</button>
+
+    <div>
+      <p>Points remaining: <span id="points">27</span></p>
+      <div id="stats">
+        <div class="stat">
+          <label for="str" class="label-stat">STR</label>
+          <input type="button" value="<" class="min">
+          <p id="str" class="value-stat">8</p>
+          <input type="button" value=">" class="plus">
+          <p class="modifier-stat">Modifier<span id="strMod">-1</span> (this value will be added to your dice)</p>
+        </div>
+        <div class="stat">
+          <label for="dex" class="label-stat">DEX</label>
+          <input type="button" value="<" class="min">
+          <p id="dex" class="value-stat">8</p>
+          <input type="button" value=">" class="plus">
+          <p class="modifier-stat">Modifier<span id="dexMod">-1</span> (this value will be added to your dice)</p>
+        </div>
+        <div class="stat">
+          <label for="con" class="label-stat">CON</label>
+          <input type="button" value="<" class="min">
+          <p id="con" class="value-stat">8</p>
+          <input type="button" value=">" class="plus">
+          <p class="modifier-stat">Modifier<span id="conMod">-1</span> (this value will be added to your dice)</p>
+        </div>
+        <div class="stat">
+          <label for="int" class="label-stat">INT</label>
+          <input type="button" value="<" class="min">
+          <p id="int" class="value-stat">8</p>
+          <input type="button" value=">" class="plus">
+          <p class="modifier-stat">Modifier<span id="intMod">-1</span> (this value will be added to your dice)</p>
+        </div>
+        <div class="stat">
+          <label for="wis" class="label-stat">WIS</label>
+          <input type="button" value="<" class="min">
+          <p id="wis" class="value-stat">8</p>
+          <input type="button" value=">" class="plus">
+          <p class="modifier-stat">Modifier<span id="wisMod">-1</span> (this value will be added to your dice)</p>
+        </div>
+        <div class="stat">
+          <label for="cha" class="label-stat">CHA</label>
+          <input type="button" value="<" class="min">
+          <p id="cha" class="value-stat">8</p>
+          <input type="button" value=">" class="plus">
+          <p class="modifier-stat">Modifier: <span id="chaMod">-1</span> (this value will be added to your dice)</p>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div>
+    <label for="equipment">Equipment: </label>
+    <span id="weapon"></span>
+  </div>
+  <div id="spells">
+  </div>
+  <div>
+    <button value="toBattle" onclick="TOBATTLE()">TO BATTLE</button><span id="err" style="color: red;"></span>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="index.js"></script>
+</body>
+
+</html>
