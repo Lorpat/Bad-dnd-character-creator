@@ -34,6 +34,7 @@ let enemy = {
     ac: "0",
     img: "",
     dexMod: "",
+    sleep: false,
 };
 
 function d4() { return (Math.floor(Math.random() * 4) + 1); }
@@ -162,7 +163,7 @@ function inizializeEnemy() {
                     enemyName.innerHTML = enemy.name;
                     enemyHealth.innerHTML = enemy.currentHpPerc;
                 })
-                localStorage.setItem("enemy", "bandit");
+            localStorage.setItem("enemy", "bandit");
             break;
         case 2:
             fetch("https://www.dnd5eapi.co/api/monsters/" + "cultist",
@@ -183,7 +184,7 @@ function inizializeEnemy() {
                     enemyName.innerHTML = enemy.name;
                     enemyHealth.innerHTML = enemy.currentHpPerc;
                 })
-                localStorage.setItem("enemy", "cultist");
+            localStorage.setItem("enemy", "cultist");
             break;
         case 3:
             fetch("https://www.dnd5eapi.co/api/monsters/" + "guard",
@@ -204,7 +205,7 @@ function inizializeEnemy() {
                     enemyName.innerHTML = enemy.name;
                     enemyHealth.innerHTML = enemy.currentHpPerc;
                 })
-                localStorage.setItem("enemy", "guard");
+            localStorage.setItem("enemy", "guard");
             break;
 
         default:
@@ -219,8 +220,14 @@ function damageCharacter(n) {
     resetTerminal();
 }
 
+function healCharacter(n) {
+    character.currentHp += n;
+    if (character.currentHp > character.maxHp) { character.currentHp = character.maxHp };
+    characterHP.innerHTML = character.currentHp + "+(" + n + ")";
+    resetTerminal();
+}
+
 function damageEnemy(n) {
-    console.log(n);
     enemyCard.classList.add("shake");
     enemy.currentHp -= n;
     enemy.currentHpPerc = Math.floor((enemy.currentHp * 100) / enemy.maxHp);
@@ -261,8 +268,13 @@ function hit(bon, dif) {
 
 function hitE(bon, dif) {
     let n = d20();
-    if (n + 2 + bon >= dif) {
+    if (n + 2 + bon >= dif && !enemy.sleep) {
         return true;
+    }
+    if (enemy.sleep) {
+        if (d20() >= 15) {
+            sleep = false;
+        }
     }
     return false;
 }
@@ -330,13 +342,11 @@ function attack() {
 
 function useRun() {
     disableAllBtn();
-    if(d20()-(-character.modDex) >= d20()+4)
-    {
+    if (d20() - (-character.modDex) >= d20() + 4) {
         window.location.replace("./index.html");
     }
-    else
-    {
-        old_string="You can't run";
+    else {
+        old_string = "You can't run";
         resetTerminal();
         if (hitE(enemy.actionBon, character.ac)) {
             let arr = enemy.actionDam.split("+");
@@ -448,6 +458,123 @@ function useCantrip() {
         }
     }
     setTimeout(() => { dado.classList.remove("rotate"); enAllBtn() }, 2000);
+}
+
+function useLevel1() {
+    if (character.spellslots > 0) {
+        disableAllBtn();
+        if (init) {
+
+            switch (character.lv1) {
+                case "sleep":
+                    enemy.sleep = true;
+                    break;
+                case "cure-wounds":
+                    healCharacter(decomposeDice("1d8") - (-character.modWis));
+                    break;
+                case "thunderwave":
+                    if (hit(character.modWis, d20())) {
+                        damageEnemy(decomposeDice("2d8"));
+                    }
+                    else {
+                        damageEnemy(decomposeDice("2d8") / 2);
+                    }
+                    break;
+                case "burning-hands":
+                    if (hit(character.modCha, d20() - (-enemy.dexMod))) {
+                        damageEnemy(decomposeDice("3d6"));
+                    }
+                    else {
+                        damageEnemy(decomposeDice("3d6") / 2);
+                    }
+                    break;
+                case "hellish-rebuke":
+                    if (hit(character.modCha, d20() - (-enemy.dexMod))) {
+                        damageEnemy(decomposeDice("2d10"));
+                    }
+                    else {
+                        damageEnemy(decomposeDice("2d10") / 2);
+                    }
+                    break;
+                case "magic-missile":
+                    damageEnemy(decomposeDice("3d4") + 3);
+                    break;
+
+                default:
+                    break;
+            }
+            if (enemy.currentHp <= 0) {
+                window.location.replace("./win.html");
+            }
+
+            if (hitE(enemy.actionBon, character.ac)) {
+                let arr = enemy.actionDam.split("+");
+                damageCharacter(decomposeDice(arr[0])) - (-arr[1]);
+                if (character.currentHp <= 0) {
+                    window.location.replace("./lose.html");
+                }
+            }
+        }
+        else {
+            if (hitE(enemy.actionBon, character.ac)) {
+                let arr = enemy.actionDam.split("+");
+                damageCharacter(decomposeDice(arr[0])) - (-arr[1]);
+                if (character.currentHp <= 0) {
+                    window.location.replace("./lose.html");
+                }
+            }
+            switch (character.lv1) {
+                case "sleep":
+                    enemy.sleep = true;
+                    break;
+                case "cure-wounds":
+                    healCharacter(decomposeDice("1d8") - (-character.modWis));
+                    break;
+                case "thunderwave":
+                    if (hit(character.modWis, d20())) {
+                        damageEnemy(decomposeDice("2d8"));
+                    }
+                    else {
+                        damageEnemy(decomposeDice("2d8") / 2);
+                    }
+                    break;
+                case "burning-hands":
+                    if (hit(character.modCha, d20() - (-enemy.dexMod))) {
+                        damageEnemy(decomposeDice("3d6"));
+                    }
+                    else {
+                        damageEnemy(decomposeDice("3d6") / 2);
+                    }
+                    break;
+                case "hellish-rebuke":
+                    if (hit(character.modCha, d20() - (-enemy.dexMod))) {
+                        damageEnemy(decomposeDice("2d10"));
+                    }
+                    else {
+                        damageEnemy(decomposeDice("2d10") / 2);
+                    }
+                    break;
+                case "magic-missile":
+                    damageEnemy(decomposeDice("3d4") + 3);
+                    break;
+
+                default:
+                    break;
+            }
+            
+            if (enemy.currentHp <= 0) {
+                window.location.replace("./win.html");
+            }
+        }
+        setTimeout(() => { dado.classList.remove("rotate"); enAllBtn() }, 2000);
+        character.spellslots-=1;
+        slots.innerHTML=character.spellslots;
+    }
+    else
+    {
+        old_string="You have no spell slots";
+        resetTerminal();
+    }
 }
 
 function decomposeDice(string) {
