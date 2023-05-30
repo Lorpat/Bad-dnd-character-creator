@@ -418,7 +418,7 @@ function TOBATTLE()
     if(character.name.trim()!=""&&points.innerHTML==0)
     {
         localStorage.setItem("character", JSON.stringify(character));
-        window.location.replace("http://localhost/apiTest/battle.html")
+        window.location.replace("./battle.html")
     }
     else if(!character.name.trim()!="")
     {

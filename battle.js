@@ -162,6 +162,7 @@ function inizializeEnemy() {
                     enemyName.innerHTML = enemy.name;
                     enemyHealth.innerHTML = enemy.currentHpPerc;
                 })
+                localStorage.setItem("enemy", "bandit");
             break;
         case 2:
             fetch("https://www.dnd5eapi.co/api/monsters/" + "cultist",
@@ -182,6 +183,7 @@ function inizializeEnemy() {
                     enemyName.innerHTML = enemy.name;
                     enemyHealth.innerHTML = enemy.currentHpPerc;
                 })
+                localStorage.setItem("enemy", "cultist");
             break;
         case 3:
             fetch("https://www.dnd5eapi.co/api/monsters/" + "guard",
@@ -202,6 +204,7 @@ function inizializeEnemy() {
                     enemyName.innerHTML = enemy.name;
                     enemyHealth.innerHTML = enemy.currentHpPerc;
                 })
+                localStorage.setItem("enemy", "guard");
             break;
 
         default:
@@ -288,7 +291,7 @@ function attack() {
                 .then((data) => {
                     damageEnemy(decomposeDice(data.damage.damage_dice) - (-character.modStr));
                     if (enemy.currentHp <= 0) {
-                        window.location.replace("http://localhost/apiTest/win.html");
+                        window.location.replace("./win.html");
                     }
                 })
             enemyCard.classList.remove("shake");
@@ -297,7 +300,7 @@ function attack() {
             let arr = enemy.actionDam.split("+");
             damageCharacter(decomposeDice(arr[0])) - (-arr[1]);
             if (character.currentHp <= 0) {
-                window.location.replace("http://localhost/apiTest/index.html");
+                window.location.replace("./lose.html");
             }
         }
     }
@@ -306,7 +309,7 @@ function attack() {
             let arr = enemy.actionDam.split("+");
             damageCharacter(decomposeDice(arr[0])) - (-arr[1]);
             if (character.currentHp <= 0) {
-                window.location.replace("http://localhost/apiTest/index.html");
+                window.location.replace("./lose.html");
             }
         }
         if (hit(character.modStr, enemy.ac)) {
@@ -316,7 +319,7 @@ function attack() {
                 .then((data) => {
                     damageEnemy(decomposeDice(data.damage.damage_dice) - (-character.modStr));
                     if (enemy.currentHp <= 0) {
-                        window.location.replace("http://localhost/apiTest/win.html");
+                        window.location.replace("./win.html");
                     }
                 })
             enemyCard.classList.remove("shake");
@@ -327,9 +330,9 @@ function attack() {
 
 function useRun() {
     disableAllBtn();
-    if(d20()-(-character.dexMod) >= d20()+4)
+    if(d20()-(-character.modDex) >= d20()+4)
     {
-        window.location.replace("http://localhost/apiTest/index.html");
+        window.location.replace("./index.html");
     }
     else
     {
@@ -339,7 +342,7 @@ function useRun() {
             let arr = enemy.actionDam.split("+");
             damageCharacter(decomposeDice(arr[0])) - (-arr[1]);
             if (character.currentHp <= 0) {
-                window.location.replace("http://localhost/apiTest/index.html");
+                window.location.replace("./lose.html");
             }
         }
     }
@@ -386,14 +389,14 @@ function useCantrip() {
                 break;
         }
         if (enemy.currentHp <= 0) {
-            window.location.replace("http://localhost/apiTest/win.html");
+            window.location.replace("./win.html");
         }
 
         if (hitE(enemy.actionBon, character.ac)) {
             let arr = enemy.actionDam.split("+");
             damageCharacter(decomposeDice(arr[0])) - (-arr[1]);
             if (character.currentHp <= 0) {
-                window.location.replace("http://localhost/apiTest/index.html");
+                window.location.replace("./lose.html");
             }
         }
     }
@@ -402,7 +405,7 @@ function useCantrip() {
             let arr = enemy.actionDam.split("+");
             damageCharacter(decomposeDice(arr[0])) - (-arr[1]);
             if (character.currentHp <= 0) {
-                window.location.replace("http://localhost/apiTest/index.html");
+                window.location.replace("./lose.html");
             }
         }
         switch (character.cantrip) {
@@ -441,7 +444,7 @@ function useCantrip() {
                 break;
         }
         if (enemy.currentHp <= 0) {
-            window.location.replace("http://localhost/apiTest/win.html");
+            window.location.replace("./win.html");
         }
     }
     setTimeout(() => { dado.classList.remove("rotate"); enAllBtn() }, 2000);
